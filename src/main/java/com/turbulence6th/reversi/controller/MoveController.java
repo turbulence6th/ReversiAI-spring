@@ -22,6 +22,10 @@ public class MoveController {
 
         int[] move = ai.play();
 
+        if (move == null) {
+            return null;
+        }
+
         return ReversiCoordinate.builder()
                 .x(move[0])
                 .y(move[1])

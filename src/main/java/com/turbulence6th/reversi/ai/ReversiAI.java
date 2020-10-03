@@ -298,8 +298,20 @@ public class ReversiAI {
                 || (getValidMoves(board, spaces, 1).isEmpty() && getValidMoves(board, spaces, -1).isEmpty());
     }
 
-    private int point(int[][] board) {
-        return Arrays.stream(board).map(row -> Arrays.stream(row).sum()).mapToInt(Integer::intValue).sum();
+    private double point(int[][] board) {
+        int plus = 0;
+        int minus = 0;
+        for (int[] row : board) {
+            for (int cell : row) {
+                if (cell == 1) {
+                    plus++;
+                } else if (cell == -1) {
+                    minus++;
+                }
+            }
+        }
+
+        return (double) plus / minus;
     }
 
     private int edgePoint(int[][] board) {
@@ -324,7 +336,7 @@ public class ReversiAI {
         return total;
     }
 
-    private Node minimax(int player, int[][] board, List<int[]> spaces, int alpha, int beta, int depth) {
+    private Node minimax(int player, int[][] board, List<int[]> spaces, double alpha, double beta, int depth) {
 
         if (isFinished(board, spaces)) {
             return new Node(point(board));

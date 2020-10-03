@@ -6,23 +6,23 @@ import lombok.Setter;
 public class Node implements Comparable<Node> {
 
     @Getter
-    private final int point;
+    private final double point;
 
     @Getter
     @Setter
     private Move move;
 
-    public Node(int point) {
+    public Node(double point) {
         this.point = point;
     }
 
     @Override
     public int compareTo(Node node) {
-        return point - node.point;
+        return (int) (point - node.point);
     }
 
     @Override
     public String toString() {
-        return String.format("[point: %d, move: %s]", point, move);
+        return String.format("[point: %f, move: %s]", point, move);
     }
 }
