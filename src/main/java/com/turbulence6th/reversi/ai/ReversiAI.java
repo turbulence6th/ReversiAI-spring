@@ -314,26 +314,39 @@ public class ReversiAI {
         return (double) plus / minus;
     }
 
-    private int edgePoint(int[][] board) {
-        int total = 0;
-        total += 5 * board[0][0] + 5 * board[0][7] + 5 * board[7][0] + 5 * board[7][7];
+    private void checkAndApply(ScoreWrapper scoreWrapper, int tile, int point) {
+        if (tile == 1) {
+            scoreWrapper.setPlus(scoreWrapper.getPlus() + point);
+        } else if (tile == -1) {
+            scoreWrapper.setMinus(scoreWrapper.getMinus() + point);
+        }
+    }
+
+    private double edgePoint(int[][] board) {
+        ScoreWrapper scoreWrapper = new ScoreWrapper();
+
+        checkAndApply(scoreWrapper, board[0][0], 5);
+        checkAndApply(scoreWrapper, board[0][7], 5);
+        checkAndApply(scoreWrapper, board[7][0], 5);
+        checkAndApply(scoreWrapper, board[7][7], 5);
+
         for (int i = 1; i < 7; i++) {
-            total += board[i][0];
+            checkAndApply(scoreWrapper, board[i][0], 1);
         }
 
         for (int i = 1; i < 7; i++) {
-            total += board[0][i];
+            checkAndApply(scoreWrapper, board[0][i], 1);
         }
 
         for (int i = 1; i < 7; i++) {
-            total += board[7][i];
+            checkAndApply(scoreWrapper, board[7][i], 1);
         }
 
         for (int i = 1; i < 7; i++) {
-            total += board[i][7];
+            checkAndApply(scoreWrapper, board[i][7], 1);
         }
 
-        return total;
+        return (double) scoreWrapper.getPlus() / scoreWrapper.getMinus();
     }
 
     private Node minimax(int player, int[][] board, List<int[]> spaces, double alpha, double beta, int depth) {
