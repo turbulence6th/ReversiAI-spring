@@ -458,7 +458,7 @@ class Reversi {
 	sendTable() {
 		return $.ajax({
             type: 'POST',
-            url: 'reversi-ai/move',
+            url: 'move',
             data: {
             	'board[]': this.board
             },
